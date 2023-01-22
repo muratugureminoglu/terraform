@@ -1,6 +1,6 @@
 variable "do_token" {
   type = string
-  default = "do_toke"
+  default = "do_token"
 }
 
 variable "do_cluster_enable" {

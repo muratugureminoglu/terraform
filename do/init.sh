@@ -1,6 +1,6 @@
 #!/bin/bash
 
-community_version=""
+community_version="https://api.github.com/repos/ant-media/Ant-Media-Server/releases/latest | grep \"browser_download_url\" | awk '{ print $2 }' | sed 's/,$//' | sed 's/\"//g'"
 enterprise_version=""
 
 wget https://raw.githubusercontent.com/ant-media/Scripts/master/install_ant-media-server.sh && chmod 755 install_ant-media-server.sh

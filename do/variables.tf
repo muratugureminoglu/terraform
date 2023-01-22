@@ -1,6 +1,6 @@
 variable "do_token" {
   type = string
-  default = "dop_v1_c25852469875173225f8813a02ae990e5921c4f4fbe2d82dcb9e938de562e349"
+  default = "do_toke"
 }
 
 variable "do_cluster_enable" {

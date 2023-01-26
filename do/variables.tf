@@ -7,6 +7,10 @@ variable "do_cluster_enable" {
   default = false
 }
 
+variable "do_droplet_enable" {
+  default = false
+}
+
 variable "do_cluster_name" {
   default = "antmedia"
 }

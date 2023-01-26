@@ -6,13 +6,13 @@ enterprise_version=""
 wget https://raw.githubusercontent.com/ant-media/Scripts/master/install_ant-media-server.sh && chmod 755 install_ant-media-server.sh
 
 if [ "$marketplace" = "enterprise" ]; then
-	wget --load-cookies /tmp/cookies.txt $enterprise_version
+	wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate '[https://docs.google.com/uc?export=download&id=1avVXMd5S6NNUu6Lj-k-ZvIqb57-0q-Nf](https://docs.google.com/uc?export=download&id=1ZLJ87NSIXCluNPfS-lzggZTI6fcUHkkR)' -O- | sed -rn 's/.*confirm=(\[0-9A-Za-z_\]+).*/\\1\\n/p')&id=1avVXMd5S6NNUu6Lj-k-ZvIqb57-0q-Nf" -O ant.zip && rm -rf /tmp/cookies.txt
 	./install_ant-media-server.sh -i ant.zip
 else
 	curl -L -o ant.zip $(curl -s $community_version)
 	./install_ant-media-server.sh -i ant.zip
 fi
-
+sudo apt-get purge droplet-agent -y
 sed -i 's/server.marketplace=.*/server.marketplace=do/g' /usr/local/antmedia/conf/red5.properties
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -31,6 +31,7 @@ rm -rf /usr/local/antmedia/conf/instanceId
 rm -rf /usr/local/antmedia/*.db.*
 rm -rf /usr/local/antmedia/*.db
 rm -rf /root/*.zip && rm -rf /root/install*
+sudo apt-get purge droplet-agent -y
 
 wget https://raw.githubusercontent.com/digitalocean/marketplace-partners/master/scripts/90-cleanup.sh
 wget https://raw.githubusercontent.com/digitalocean/marketplace-partners/master/scripts/99-img-check.sh

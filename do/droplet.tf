@@ -4,6 +4,7 @@ resource "digitalocean_ssh_key" "default" {
 }
 
 resource "digitalocean_droplet" "enterprise" {
+  count = var.do_droplet_enable ? 1 : 0
   image  = "ubuntu-20-04-x64"
   name   = "ams-server-enterprise"
   region = "fra1"
@@ -18,7 +19,7 @@ resource "digitalocean_droplet" "enterprise" {
       type        = "ssh"
       user        = "root"
       private_key = file("./ssh/id_rsa")
-      host        = digitalocean_droplet.enterprise.ipv4_address
+      host        = digitalocean_droplet.enterprise[count.index].ipv4_address
     }
 
   }
@@ -36,17 +37,19 @@ resource "digitalocean_droplet" "enterprise" {
       type        = "ssh"
       user        = "root"
       private_key = file("./ssh/id_rsa")
-      host        = digitalocean_droplet.enterprise.ipv4_address
+      host        = digitalocean_droplet.enterprise[count.index].ipv4_address
     }
   }
 }
 
 resource "digitalocean_droplet_snapshot" "ams-enterprise-snapshot" {
-  droplet_id = digitalocean_droplet.enterprise.id
+  count = var.do_droplet_enable ? 1 : 0
+  droplet_id = digitalocean_droplet.enterprise[count.index].id
   name       = "ams-enterprise-snapshot-01"
 }
 
 resource "digitalocean_droplet" "community" {
+  count = var.do_droplet_enable ? 1 : 0
   image  = "ubuntu-20-04-x64"
   name   = "ams-server-community"
   region = "fra1"
@@ -61,7 +64,7 @@ resource "digitalocean_droplet" "community" {
       type        = "ssh"
       user        = "root"
       private_key = file("./ssh/id_rsa")
-      host        = digitalocean_droplet.community.ipv4_address
+      host        = digitalocean_droplet.community[count.index].ipv4_address
     }
 
   }
@@ -78,12 +81,13 @@ resource "digitalocean_droplet" "community" {
       type        = "ssh"
       user        = "root"
       private_key = file("./ssh/id_rsa")
-      host        = digitalocean_droplet.community.ipv4_address
+      host        = digitalocean_droplet.community[count.index].ipv4_address
     }
   }
 }
 
 resource "digitalocean_droplet_snapshot" "ams-community-snapshot" {
-  droplet_id = digitalocean_droplet.community.id
+  count = var.do_droplet_enable ? 1 : 0
+  droplet_id = digitalocean_droplet.community[count.index].id
   name       = "ams-community-snapshot-01"
 }
